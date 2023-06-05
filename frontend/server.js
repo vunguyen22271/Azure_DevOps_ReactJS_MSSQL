@@ -30,4 +30,28 @@ app.post('/createemp', async(req, res) => {
   // res.send({result: 'api'});
 })
 
+app.get('/getemp', async(req, res) => {
+  console.log('called /getemp');
+  const result = await dbOperation.getEmployees('Jim');
+  console.log('   FILE: server.js');
+  console.log(result);
+  res.send(result);
+  // res.send({result: 'api'});
+})
+
+app.get('/getemp', async(req, res) => {
+  console.log('called /getemp');
+  const result = await dbOperation.getEmployees('Jim');
+  console.log('   FILE: server.js');
+  console.log(result);
+  res.send(result);
+  // res.send({result: 'api'});
+})
+
+app.get('/', (req, res) => {
+  return res.status(200).send('Hello World');
+});
+
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
+
+dbOperation.getEmployees('Jim');

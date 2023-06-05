@@ -2,7 +2,8 @@
 import './App.css';
 import React, {useState} from 'react';
 
-const API_URL = 'http://localhost:3000';
+// const API_URL = 'http://localhost:5000';
+const API_URL = 'https://vusqltutorialserver.database.windows.net';
 
 function App() {
   const [returnedData, setReturnData] = useState({EmployeeID: 0, Firstname: '', Lastname: '', Age: 0, Gender: ''});

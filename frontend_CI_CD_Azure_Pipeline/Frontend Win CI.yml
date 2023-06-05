@@ -1,0 +1,49 @@
+# Variable 'buildOutputFolder' was defined in the Variables tab
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - /app
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: windows-2019
+  steps:
+  - checkout: self
+    clean: true
+    fetchTags: false
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      workingDir: frontend
+      verbose: false
+  - task: Npm@1
+    displayName: npm custom
+    inputs:
+      command: custom
+      workingDir: frontend
+      verbose: false
+      customCommand: run build
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+    inputs:
+      SourceFolder: frontend/build
+      Contents: '**/*'
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+      CleanTargetFolder: true
+  - task: ArchiveFiles@2
+    displayName: Archive $(Build.ArtifactStagingDirectory)
+    inputs:
+      rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+      includeRootFolder: false
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+...
